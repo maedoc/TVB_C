@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <math.h>
 //#include "mpi.h"
 
@@ -304,6 +307,15 @@ int main(int argc, char *argv[])
     
     int i, j, k;
     
+    /*
+     Create output folder if it doesn't exist
+     */
+    {
+        struct stat output_st = {0};
+        if (stat("output", &output_st) == -1) {
+            mkdir("output", 0770);
+        }
+    }
     
     /*
      Open input/output file(s)
